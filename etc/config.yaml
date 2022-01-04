@@ -1,10 +1,31 @@
+http:
+  mode: release
+  port: 18080
+  showLog: true
+  session:
+    cookieName: deepblue_id
+    cookieDomain: ""
+    httpOnly: true
+    gcInterval: 60
+    cookieLifetime: 86400 # unit: second, 0: cookie life same to browser
+
+logger:
+  dir: logs/server
+  type: production # devlopment 开发模式  production 生产模式
+  level: INFO
+  # rotate by time
+  keepHours: 24
+  ## rotate by size
+  #rotatenum: 3
+  #rotatesize: 256 # unit: MB
+
 db:
   datasource: mysql
   mysql:
-    addr: 127.0.0.1
-    port: 3306
-    user: nacos
-    passwd: nacos
+    addr: "127.0.0.1"
+    port: "3306"
+    user: "nacos"
+    passwd: "nacos"
 
 
 configcenter:
