@@ -1,0 +1,18 @@
+db:
+  datasource: mysql
+  mysql:
+    addr: 127.0.0.1
+    port: 3306
+    user: nacos
+    passwd: nacos
+
+
+configcenter:
+  datasource: nacos
+  nacos:
+    addr: 127.0.0.1
+    port: 8848
+    user: nacos
+    password: nacos
+    namespaces: deeblue
+  # etcd:
