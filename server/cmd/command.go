@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/RalapZ/DeepBluePaas/common/middleware"
 	"github.com/RalapZ/DeepBluePaas/server/config"
 	"github.com/RalapZ/DeepBluePaas/server/router"
 	"github.com/spf13/cobra"
@@ -23,12 +22,7 @@ var (
 		Long:  "root信息",
 		Run: func(cmd *cobra.Command, args []string) {
 			//fmt.Printf("参数 %##v",args)
-			err := middleware.InitLogger()
-			if err != nil{
-				panic(err)
-			}
-			fmt.Printf("main:----%##v\n",middleware.LogGlobal)
-			defer middleware.LogGlobal.Sync()
+
 			fmt.Println(cmd.Flags().GetString(version))
 			//logger.InitLogger()
 			router.Serve()

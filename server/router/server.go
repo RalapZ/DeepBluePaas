@@ -6,8 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Serve(){
 
+
+
+func Serve(){
+	err := middleware.InitLogger()
+	if err != nil{
+		panic(err)
+	}
+	fmt.Printf("main:----%##v\n",middleware.LogGlobal)
+	defer middleware.LogGlobal.Sync()
 	Server := gin.New()
 	//Logger, err := zap.NewProduction()
 	//if err != nil{
