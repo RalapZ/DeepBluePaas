@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"github.com/RalapZ/DeepBluePaas/common/middleware"
+	"github.com/RalapZ/DeepBluePaas/server/config"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,7 +11,7 @@ import (
 
 
 func Serve(){
-	err := middleware.InitLogger()
+	err := middleware.InitLogger(&config.LogConfig)
 	if err != nil{
 		panic(err)
 	}
