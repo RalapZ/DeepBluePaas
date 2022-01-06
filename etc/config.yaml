@@ -1,3 +1,9 @@
+service:
+  grpc: 18081        #grpc端口
+  http: 18080     #对外服务端口
+  name: base.deepblue.myzone   #服务名称
+
+
 http:
   mode: release
   port: 18080
@@ -10,8 +16,9 @@ http:
     cookieLifetime: 86400 # unit: second, 0: cookie life same to browser
 
 logger:
-  dir: logs/server
-  type: production # devlopment 开发模式  production 生产模式
+  path: logs/server
+  filename: access.log
+  logtype: production # devlopment 开发模式  production 生产模式
   level: INFO
   # rotate by time
   keepHours: 24
@@ -28,12 +35,22 @@ db:
     passwd: "nacos"
 
 
-configcenter:
+registry:
   datasource: nacos
   nacos:
-    addr: 127.0.0.1
-    port: 8848
-    user: nacos
-    password: nacos
-    namespaces: deeblue
+    server:
+      addr: 127.0.0.1
+      port: 8848
+    client:
+      namespaceid: deepblue
+      timeoutms: 5000
+      notLoadcacheatstart: true
+      logdir: "/tmp/nacos/log"
+      cachedir: "/tmp/nacos/cache"
+      rotatetime: "1h"
+      maxage: 3
+      loglevel: "debug"
+      enable: true  #默认开启服务   true开启/false不开启
+      ephemeral: true  #永久服务还是临时服务 true 临时服务/false 永久服务 ; 默认 true
   # etcd:
+  # applo:

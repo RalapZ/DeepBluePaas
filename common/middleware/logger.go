@@ -17,12 +17,28 @@ import (
 
 var LogGlobal *zap.Logger
 
+
+type LogConfig struct{
+	MaxSize   int `yaml:"maxsize"`
+	MaxBackups int `yaml:"maxbackups"`
+	MaxAge int`yaml:"maxage"`
+	KeepHours int `yaml:"keephours"`
+	LogLevel string `yaml:"loglevel"`
+	LogPath string `yaml:"logpath"`
+	LogName string `yaml:"logname"`
+	LogType string `yaml:"logtype"`
+
+}
+
 // InitLogger 初始化Logger
-func InitLogger() (err error) {
-	writeSyncer := getLogWriter("./logs/access.log", 10, 10, 10)
+func InitLogger(logconfig *LogConfig) (err error) {
+	//fmt.Printf("%##v",logconfig)
+	logFileName:=logconfig.LogPath+"/"+logconfig.LogName
+	logLevel:=logconfig.LogLevel
+	writeSyncer := getLogWriter(logFileName, 10, 10, 10)
 	encoder := getEncoder()
 	var l = new(zapcore.Level)
-	err = l.UnmarshalText([]byte("debug"))
+	err = l.UnmarshalText([]byte(logLevel))
 	if err != nil {
 		return
 	}

@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/RalapZ/DeepBluePaas/server/config"
+	"github.com/RalapZ/DeepBluePaas/server/grpc"
 	"github.com/RalapZ/DeepBluePaas/server/router"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
@@ -25,7 +26,8 @@ var (
 
 			fmt.Println(cmd.Flags().GetString(version))
 			//logger.InitLogger()
-			router.Serve()
+			//router.Serve()
+			manager()
 		},
 	}
 )
@@ -41,9 +43,17 @@ func init() {
 	//Logger = logger.InitLogger()
 	//rootCmd.Flags().StringP(version,"a","ralap","作者名称")
 	//rootCmd.Flags().BoolP("start","y",true,"是否开启")
-	config.ParserConfig()
+
 }
 
 func Execute() {
 	rootCmd.Execute()
+}
+
+
+
+func manager(){
+	config.ParserConfig()
+	go grpc.Start()
+	router.Serve()
 }
