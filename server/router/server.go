@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"github.com/RalapZ/DeepBluePaas/common/middleware"
 	"github.com/RalapZ/DeepBluePaas/server/config"
 	"github.com/gin-gonic/gin"
@@ -12,10 +11,11 @@ import (
 
 func Serve(){
 	err := middleware.InitLogger(&config.LogConfig)
+	config.RedisGetClientConn()
 	if err != nil{
 		panic(err)
 	}
-	fmt.Printf("main:----%##v\n",middleware.LogGlobal)
+	//fmt.Printf("main:----%##v\n",middleware.LogGlobal)
 	defer middleware.LogGlobal.Sync()
 	Server := gin.New()
 	//Logger, err := zap.NewProduction()
@@ -23,9 +23,10 @@ func Serve(){
 	//	fmt.Println(err)
 	//}
 	//gin.Default()
-	fmt.Printf("server:---%##v",middleware.LogGlobal)
 	Server.Use(middleware.GinLogger())
 	Server.Use(middleware.PringTest())
+	Server.Use(middleware.JWTAuth(config.GVA_REDIS,config.GVA_DB,&config.LocalBlackCache))
+
 
 	//Server.Use()
 	Server.GET("/hello",hello)

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -46,6 +47,7 @@ func InitLogger(logconfig *LogConfig) (err error) {
 
 	LogGlobal = zap.New(core, zap.AddCaller())
 	zap.ReplaceGlobals(LogGlobal) // 替换zap包中全局的logger实例，后续在其他包中只需使用zap.L()调用即可
+	fmt.Println("middleware_logger:",LogGlobal)
 	return
 }
 

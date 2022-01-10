@@ -7,12 +7,17 @@ import (
 	"github.com/RalapZ/DeepBluePaas/server/router"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 type CobraFunc func(command *cobra.Command, args []string)
 
 //var test  CobraFunc
 var (
+	ProDone chan int
+
 	version = "autor"
 
 	Logger *zap.Logger
@@ -30,13 +35,13 @@ var (
 			manager()
 		},
 	}
+	myzoneCmd = &cobra.Command{
+		Use:   "myzone",
+		Long:  "myzone long 信息",
+		Short: "myzone short 信息",
+	}
 )
 
-var myzoneCmd = &cobra.Command{
-	Use:   "myzone",
-	Long:  "myzone long 信息",
-	Short: "myzone short 信息",
-}
 
 func init() {
 	rootCmd.Execute()
@@ -50,10 +55,35 @@ func Execute() {
 	rootCmd.Execute()
 }
 
+func exitHandle(exitChan chan os.Signal) {
+	for {
+		select {
+		case sig := <-exitChan:
+			fmt.Println("接受到来自系统的信号：", sig)
+			ProDone <- 1
+			//os.Exit(1) //如果ctrl+c 关不掉程序，使用os.Exit强行关掉
+		}
+	}
 
+}
+
+func SignalNotify(){
+	processChan:=make(chan os.Signal)
+	signal.Notify(processChan,os.Interrupt,os.Kill,syscall.SIGTERM)
+	exitHandle(processChan)
+}
 
 func manager(){
+	go SignalNotify()
 	config.ParserConfig()
-	go grpc.Start()
+	go dbgrpc.Startkratos()
+	go func(){
+		for{
+			select {
+			case <- ProDone:
+				os.Exit(1)
+			}
+		}
+	}()
 	router.Serve()
 }

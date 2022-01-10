@@ -34,10 +34,32 @@ db:
     user: "nacos"
     passwd: "nacos"
 
+cache:
+  datasource: redis
+  redis:
+    addr: "127.0.0.1"
+    port: 6379
+    db: 1
+    passwd:
+
+auth:
+  jwt:
+    signing-key: 'myzone'
+    expires-time: 604800
+    buffer-time: 86400
+
 
 registry:
   datasource: nacos
   nacos:
+    instance:
+      servicename: myzone.deepblue
+#      ClusterName: ,     # clustername
+      weight: 10         #权重
+      enable: false      #默认是否开启
+      healthy: true
+      ephemeral: true
+#     metadata:          #元数据
     server:
       addr: 127.0.0.1
       port: 8848
@@ -45,8 +67,8 @@ registry:
       namespaceid: deepblue
       timeoutms: 5000
       notLoadcacheatstart: true
-      logdir: "/tmp/nacos/log"
-      cachedir: "/tmp/nacos/cache"
+      logdir: "./log"
+      cachedir: "./cache"
       rotatetime: "1h"
       maxage: 3
       loglevel: "debug"

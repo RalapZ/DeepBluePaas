@@ -1,9 +1,16 @@
 package errmsg
 
 var (
-	HTTPSUCCESS = 200
-	HTTPERROR = 500
-	HTTP_REQUEST_FORBIDDEN = 403
+	/*
+	错误码规划：
+	1.550-800    自定义http异常码
+	1.1800-1899  日志异常码
+	2.1900-1999  grpc异常码
+	3.2000-2099  注册中心/配置中心错误码
+	*/
+	HTTP_RESPONSE_SUCCESS = 200
+	HTTP_RESPONSE_ERROR = 500
+	HTTP_RESPONSE_FORBIDDEN = 403
 
 	LOG_PATH_NOT_IS_EXIST= 1800   //1800-1899   日志异常码
 	LOG_FILENAME_NOT_IS_EXIST=1801
@@ -22,9 +29,9 @@ var (
 )
 
 var ErrMsg = map[int]string {
-	HTTPERROR: "访问异常",
-	HTTPSUCCESS: "访问成功",
-	HTTP_REQUEST_FORBIDDEN: "禁止访问",
+	HTTP_RESPONSE_ERROR: "访问异常",
+	HTTP_RESPONSE_SUCCESS: "访问成功",
+	HTTP_RESPONSE_FORBIDDEN: "禁止访问",
 	LOG_PATH_NOT_IS_EXIST: "日志路径配置不存在",
 
 
