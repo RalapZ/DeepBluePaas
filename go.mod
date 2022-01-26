@@ -14,6 +14,7 @@ require (
 	github.com/songzhibin97/gkit v1.1.1
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1
+	github.com/toolkits/pkg v1.2.9 // indirect
 	github.com/ugorji/go v1.2.6 // indirect
 	go.uber.org/zap v1.17.0
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect

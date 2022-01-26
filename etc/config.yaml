@@ -33,6 +33,7 @@ db:
     port: "3306"
     user: "nacos"
     passwd: "nacos"
+    db: "nacos"
 
 cache:
   datasource: redis

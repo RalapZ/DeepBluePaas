@@ -15,20 +15,10 @@ func Serve(){
 	if err != nil{
 		panic(err)
 	}
-	//fmt.Printf("main:----%##v\n",middleware.LogGlobal)
 	defer middleware.LogGlobal.Sync()
-	Server := gin.New()
-	//Logger, err := zap.NewProduction()
-	//if err != nil{
-	//	fmt.Println(err)
-	//}
-	//gin.Default()
-	Server.Use(middleware.GinLogger())
-	Server.Use(middleware.PringTest())
-	Server.Use(middleware.JWTAuth(config.GVA_REDIS,config.GVA_DB,&config.LocalBlackCache))
+	Server := gin.Default()
 
+	RouterConfig(Server)
 
-	//Server.Use()
-	Server.GET("/hello",hello)
 	Server.Run("127.0.0.1:18080")
 }

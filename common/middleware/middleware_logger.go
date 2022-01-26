@@ -78,7 +78,6 @@ func GinLogger() gin.HandlerFunc {
 		path := c.Request.URL.Path
 		query := c.Request.URL.RawQuery
 		c.Next()
-
 		cost := time.Since(start)
 		LogGlobal.Info(path,
 			zap.Int("status", c.Writer.Status()),
