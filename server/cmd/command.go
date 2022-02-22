@@ -43,8 +43,10 @@ var (
 )
 
 
+//
+
 func init() {
-	rootCmd.Execute()
+	//rootCmd.Execute()
 	//Logger = logger.InitLogger()
 	//rootCmd.Flags().StringP(version,"a","ralap","作者名称")
 	//rootCmd.Flags().BoolP("start","y",true,"是否开启")
